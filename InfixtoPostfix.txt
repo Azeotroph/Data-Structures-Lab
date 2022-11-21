@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<string.h>
+char postfix[20],infix[20],stack[20],temp;
+int top=-1,len,pos=0;
+int ind=0;
+char pop();
+void push(char);
+int get_precedence(char);
+void infixToPostfix();
+int main()
+{
+    printf("Enter infix expression\n");
+    scanf("%s",infix);
+    infixToPostfix();
+    printf("infix expression %s\nPostfix expression %s",infix,postfix);
+    return 0;
+}
+char pop()
+{
+    return stack[top--];
+}
+void push(char ch)
+{
+    stack[++top]=ch;
+}
+int get_precedence(char ch)
+{
+    switch(ch)
+    {
+        case '^':return 3;
+
+        case '*':
+        case '/': return 2;
+   
+        case '+':
+        case '-': return 1;
+   
+        case '(': return 0;
+   
+        default: return -1;
+    }
+}
+void infixToPostfix()
+{
+    len=strlen(infix);
+    push('#');
+while(ind<len)
+{
+    char ch=infix[ind++];
+    switch(ch)
+{
+    case '(':push(ch);
+    break;
+    case ')':temp=pop();
+       while(temp!='(')
+       {
+            postfix[pos++]=temp;
+            temp=pop();
+}
+break;
+    case '*':
+    case '/':
+    case '+':
+    case '-':
+    case '^': while(get_precedence(stack[top])>=get_precedence(ch))
+         {
+             postfix[pos++]=pop();
+ }
+    push(ch);
+    break;
+    default: postfix[pos++]=ch;
+}
+}
+while(top>=1)
+{
+    postfix[pos++]=pop();
+}
+}
+
+
+ 
+
+
+
+ 
+
