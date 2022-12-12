@@ -36,7 +36,6 @@ void main()
 
     }
     temp->ptr = 0;
-    /*  reset temp to the beginning */
     temp = first;
     printf("\n status of the linked list is\n");
     while (temp != 0)
